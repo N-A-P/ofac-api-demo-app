@@ -8,8 +8,14 @@ export const navigationRef =
   createRef<NavigationContainerRef<RootStackParamsList>>();
 
 export function navigateScreen<RouteName extends RootStackScreens>(
-  screens: RootStackScreens,
-  params?: RootStackParamsList[RouteName],
+  ...arg: undefined extends RootStackParamsList[RouteName]
+    ?
+        | [screen: RouteName]
+        | [screen: RouteName, params?: RootStackParamsList[RouteName]]
+    : [screen: RouteName, params: RootStackParamsList[RouteName]]
 ) {
-  navigationRef.current?.navigate(screens, params);
+  navigationRef.current?.navigate(
+    arg[0] as any,
+    arg.length > 1 ? arg[1] : undefined,
+  );
 }

@@ -1,10 +1,10 @@
-import {View} from 'react-native';
-import {Text} from '../../components';
+import {ImageBackground, View} from 'react-native';
+import {Screen, Text} from '../../components';
 
 export function CategoryScreen() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Screen>
       <Text>This is category screen</Text>
-    </View>
+    </Screen>
   );
 }

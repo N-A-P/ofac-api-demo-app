@@ -3,17 +3,16 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryScreen} from '../screens/category';
 import {LoginScreen} from '../screens/login';
 import {navigationRef} from '.';
+import {RootStackParamsList} from './screen-types';
 
-// const AuthedStack = createStackNavigator();
-// const UnauthStack = createStackNavigator();
-const MainStack = createStackNavigator();
+const MainStack = createStackNavigator<RootStackParamsList>();
 
 export function RootNavigation() {
   return (
     <NavigationContainer ref={navigationRef}>
-      <MainStack.Navigator>
-        <MainStack.Screen name="LOGIN" component={LoginScreen} />
-        <MainStack.Screen name="CATEGORY" component={CategoryScreen} />
+      <MainStack.Navigator screenOptions={{headerShown: false}}>
+        <MainStack.Screen name="Login" component={LoginScreen} />
+        <MainStack.Screen name="Category" component={CategoryScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   );

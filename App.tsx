@@ -7,13 +7,20 @@
 
 import {RootNavigation} from './src/navigation';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+// import {Provider} from 'react-redux';
+// import {redux_store} from './src/store';
 
 function App(): JSX.Element {
   return (
     <GestureHandlerRootView style={styles.root}>
-      <RootNavigation />
+      <SafeAreaProvider>
+        {/* <Provider store={redux_store}> */}
+        <RootNavigation />
+        {/* </Provider> */}
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
