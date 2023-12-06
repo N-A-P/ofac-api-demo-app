@@ -7,6 +7,9 @@ export const textPresets = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 30,
   },
+  bold: {
+    fontWeight: 'bold',
+  },
   default: {},
 });
 

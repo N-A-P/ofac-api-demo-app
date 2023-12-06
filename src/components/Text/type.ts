@@ -107,4 +107,14 @@ export interface TextProps extends TextProperties {
    * @default default
    */
   preset?: TextPresetNames;
+  /**
+   * Set margin left
+   * @default undefined
+   */
+  marginLeft?: number;
+  /**
+   * Set margin right
+   * @default undefined
+   */
+  marginRight?: number;
 }

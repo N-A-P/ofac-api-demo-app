@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-const propsToStyle = (arrStyle: Array<any>) => {
+const propsToStyle = (arrStyle: Array<TextStyle>) => {
   return arrStyle.filter(
     x => x !== undefined && !Object.values(x).some(v => v === undefined),
   );
@@ -39,6 +39,8 @@ export const Text = React.forwardRef<ReactNativeText, TextProps>(
       textTransform,
       letterSpacing,
       preset = 'default',
+      marginLeft,
+      marginRight,
       style: styleOverride = {},
       ...rest
     }: TextProps,
@@ -65,6 +67,8 @@ export const Text = React.forwardRef<ReactNativeText, TextProps>(
             {fontStyle},
             {letterSpacing},
             {lineHeight},
+            {marginLeft},
+            {marginRight},
           ]),
         ],
       ],
@@ -82,6 +86,8 @@ export const Text = React.forwardRef<ReactNativeText, TextProps>(
         textTransform,
         fontStyle,
         letterSpacing,
+        marginLeft,
+        marginRight,
         lineHeight,
       ],
     );

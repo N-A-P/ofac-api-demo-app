@@ -1,22 +1,24 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {AnimatedText, Text, TextInput} from '../../../components';
 import Animated from 'react-native-reanimated';
 // import AppIcon from '../../../assets/svg';
 
-type Props = {
+type Props = TextInputProps & {
   title: string;
-  secureTextEntry?: boolean;
-  value: string;
-  onChangeText: (val: string) => void;
-  onBlur: () => void;
+  // onChangeText: (val: string) => void;
+  // onBlur: () => void;
   error?: string;
   passwordLevel?: 1 | 2 | 3 | 4;
 };
 
-const AnimatedLabel = ({label = ''}) => {};
-
-const LoginInput = ({
+const FormInput = ({
   title = '',
   secureTextEntry = false,
   value,
@@ -24,13 +26,14 @@ const LoginInput = ({
   onBlur,
   error,
   passwordLevel,
+  ...rest
 }: Props) => {
   const [showPw, setShowPw] = useState(secureTextEntry);
 
   return (
     <View style={[styles.viewInput]}>
       <AnimatedText style={styles.titleStyle}>
-        {value?.length > 0 && title}
+        {value && value.length > 0 && title}
       </AnimatedText>
       <View style={styles.flexRow}>
         <TextInput
@@ -40,12 +43,12 @@ const LoginInput = ({
           placeholder={title}
           onBlur={onBlur}
           secureTextEntry={showPw}
-          placeholderTextColor={'#FFFFFF80'}
           inputMode={secureTextEntry ? 'text' : 'email'}
           style={[
             styles.inputStyle,
-            (!secureTextEntry || value.length === 0) && styles.borderBottom,
+            (!secureTextEntry || value?.length === 0) && styles.borderBottom,
           ]}
+          {...rest}
         />
         {passwordLevel && <Animated.View />}
         {secureTextEntry && (
@@ -59,9 +62,7 @@ const LoginInput = ({
           </TouchableOpacity>
         )}
       </View>
-      <Text style={styles.validTxt}>
-        {!error && value ? 'Field is require' : ''}
-      </Text>
+      {error && <Text text={error} style={styles.validTxt} />}
     </View>
   );
 };
@@ -76,24 +77,17 @@ const styles = StyleSheet.create({
 
   titleStyle: {
     fontSize: 12,
-    color: '#FFFFFF80',
-    // backgroundColor: 'blue',
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: '#647FFF',
   },
   inputStyle: {
     paddingBottom: 5,
     paddingTop: 10,
     fontSize: 16,
-    color: 'white',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#647FFF',
   },
   pwIcon: {
     position: 'absolute',
-    // backgroundColor: 'red',
     right: 0,
     top: 15,
   },
@@ -105,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginInput;
+export default FormInput;
