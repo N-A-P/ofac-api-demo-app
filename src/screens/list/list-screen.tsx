@@ -1,11 +1,31 @@
-import {FlatList, ImageBackground, StyleSheet, View} from 'react-native';
+import {
+  DeviceEventEmitter,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {Screen, Text} from '../../components';
 import {PaddingHorizontal} from '../../components/padding';
 import {VSpacing} from '../../components/spacing';
 import {SHADOW_CONFIG} from '../../common/constant';
-const MOCK_DATA = Array.from(Array(10).keys());
+import {useTerroisStore} from '../../store';
+
+function convertData(data: any) {
+  const result: any = [];
+  Object.entries(data).forEach(([name, matches]: any) => {
+    result.push(...matches);
+  });
+  return result;
+}
 
 export function ListScreen() {
+  const state: any = useTerroisStore(s => s);
+  const data = convertData(state.data);
+
+  const onRefresh = () => {
+    DeviceEventEmitter.emit('refresh');
+  };
   return (
     <Screen>
       <PaddingHorizontal flex={1} padding={20}>
@@ -14,33 +34,39 @@ export function ListScreen() {
             <Text text="User list" preset="heading" />
           </View>
           <FlatList
-            data={MOCK_DATA}
+            refreshControl={
+              <RefreshControl
+                onRefresh={onRefresh}
+                refreshing={state.refreshing}
+              />
+            }
+            data={data}
             style={{flex: 1}}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={VSpacing}
-            renderItem={({item, index}) => <ListItem />}
+            renderItem={({item, index}) => <ListItem item={item} />}
           />
         </View>
       </PaddingHorizontal>
     </Screen>
   );
 }
-function ListItem() {
+function ListItem({item}: any) {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.row}>
         <Text preset="bold" text="Name:" />
-        <Text marginLeft={10} text="Full user name" />
+        <Text marginLeft={10} text={item.fullName} />
       </View>
       <View style={styles.row}>
         <Text preset="bold" text="DOB:" />
-        <Text marginLeft={10} text="10/12/2023" />
+        <Text marginLeft={10} text={item.dob} />
       </View>
 
       <View style={styles.row}>
-        <Text preset="bold" text="Country:" />
-        <Text marginLeft={10} text="VN" />
+        <Text preset="bold" text="UID :" />
+        <Text marginLeft={10} text={item.uid} />
       </View>
     </View>
   );
