@@ -3,7 +3,7 @@ import {ParamsNetwork} from './type';
 import {TIMEOUT} from './ApiConstant';
 
 const BASE_URL = 'https://search.ofac-api.com/v3';
-const KEY = 'c604aea8-72a4-41bc-aca3-f6988677e209';
+const KEY = '';
 const http = axios.create({
   baseURL: BASE_URL,
   timeout: TIMEOUT,
@@ -15,7 +15,7 @@ const http = axios.create({
 //  and then the second screen will return a list of matches.
 //  For the matches, pull their full name, date of birth and UID
 // {
-// 	"apiKey": "c604aea8-72a4-41bc-aca3-f6988677e209",
+// 	"apiKey":"",
 // 	"minScore": 95,
 // 	"source": ["SDN"],
 // 	"cases": [{
@@ -39,7 +39,7 @@ function request<T>(config: ParamsNetwork) {
     http
       .request(config)
       .then(({data}) => {
-        // caches.set(hashed, data);
+        caches.set(hashed, data);
         res(data);
       })
       .catch(error => rej(error));
